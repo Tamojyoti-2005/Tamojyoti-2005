@@ -6,10 +6,16 @@ from dataclasses import dataclass, field
 from typing import List
 
 import streamlit as st
-from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
+try:
+    # Only needed for local development (.env file). Streamlit Community
+    # Cloud provides secrets via st.secrets instead, so if this package
+    # isn't installed there, the app should still run rather than crash.
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
 NVIDIA_MODEL = "nvidia/nemotron-3.5-lightning-30b-a3b"
